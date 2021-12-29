@@ -1,0 +1,30 @@
+<!doctype html>
+
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8">
+
+    <title>Point de croix</title>
+    <meta name="description" content="Point de croix">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="index.css">
+    <script defer type="module" src="lib/svg-pan-zoom.min.js"></script>
+    <script src="lib/index-min.js"></script>
+    <script defer type="module" src="index.js"></script>
+    <script defer src="lib/hammer.min.js"></script>
+    <script defer src="lib/skmeans.min.js"></script>
+
+    <link rel="manifest" href="manifest.json" />
+</head>
+
+<body>
+    <app-router>
+        <app-editor slot="front" data-routing="editor"></app-editor>
+        <app-viewer slot="front" data-routing="viewer/{id}"></app-viewer>
+        <app-listing slot="back" data-routing=""></app-listing>
+    </app-router>
+</body>
+
+</html>

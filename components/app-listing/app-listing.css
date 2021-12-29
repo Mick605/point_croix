@@ -1,0 +1,95 @@
+:host {
+    display: flex;
+    flex-direction: column;
+    overflow-y: overlay;
+    position: relative;
+}
+
+header {
+    background-color: #6200ee;
+    color: white;
+    font-weight: 500;
+    font-size: 1.5em;
+    padding: 12px 40px;
+    margin: 0;    
+    box-shadow: 0 0 4px black;
+    z-index: 10;
+}
+
+main {
+    flex: 1 0 0px;
+    min-height: 0;
+    overflow-y: overlay;
+}
+
+#liste {
+    list-style: none;
+    display: grid;
+    padding: 50px;
+    margin: 0;   
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1rem;
+}
+
+main::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+    background-color: transparent
+}
+
+main::-webkit-scrollbar-track {
+    border-radius: 10px;
+    background-color: transparent
+}
+
+main::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: #c5c5c5;
+}
+
+main::-webkit-scrollbar-corner {
+    background-color: transparent;
+    border-color: transparent
+}
+
+#newimage {
+    position: absolute;
+    right: 50px;
+    bottom: 50px;
+    height: 70px;
+    width: 70px;
+    border-radius: 100%;
+    border: none;
+    font-size: 3em;
+    background-color: #6200ee;
+    color: white;
+    box-shadow: 0px 0 8px 0px rgb(60 60 60 / 80%);
+    cursor: pointer;
+}
+
+#newimage:hover {background-color: #7c1fff;}
+#newimage:focus {
+    background-color: #8833ff;
+    outline: none;
+}
+#newimage:active {background-color: #8e3dff;}
+
+@media (max-height: 500px), (max-width: 500px) {
+    header {
+        font-size: 1.3em;
+        padding: 8px 40px;
+    }
+
+    #newimage {
+        right: 20px;
+        bottom: 20px;
+        height: 60px;
+        width: 60px;
+    }
+    
+    #liste {
+        padding: 16px;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 0.3rem;
+    }
+}

@@ -1,0 +1,103 @@
+:host {
+    display: flex;
+    flex-direction: column;
+    color: #353535;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 330px;
+    border-left: 1px solid #e0e0e0;
+    background-color: white;
+    box-shadow: 0 0 10px -5px black;
+}
+
+h1 {
+    flex: 0 0 auto;
+    font-weight: 400;
+    text-transform: uppercase;
+    padding: 10px;
+    margin: 0;
+    color: #212121;
+    font-size: 1.4em;
+    text-align: center;
+    border-bottom: 2px solid #616161;
+}
+
+label {
+    padding: 10px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+}
+
+#colormode {
+    display: inline-block;
+    position: relative;
+    height: 20px;
+    width: 38px;
+    cursor: pointer;
+}
+
+#colormode::before {
+    content: '';
+    position: absolute;
+    border: 1px solid grey;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border: 3px solid white;
+    border-radius: 10px;
+    z-index: 5;
+    background-color: #9e9e9e;
+    transition: background-color 0.4s;
+}
+
+#colormode::after {
+    content: '';
+    position: absolute;
+    background-color: white;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 20px;
+    border-radius: 100%;
+    z-index: 10;
+    box-shadow: 0 0 3px 0px #888888;
+    transition: left 0.4s, background-color 0.4s;
+}
+
+#colormode:checked::before {
+    background-color: #c39ef9;
+}
+
+#colormode:checked::after {
+    left: 18px;
+    background-color: #6200ee;
+}
+
+#palette {
+    flex: 1 0 0px;
+    overflow: auto;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+}
+
+@media (max-height: 500px), (max-width: 500px) {
+    :host {
+        width: 180px;
+        font-size: 0.8em;
+    }
+    
+    label {
+        padding: 8px;
+    }
+
+    h1 {
+        padding: 4px;
+    }
+}

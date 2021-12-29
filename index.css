@@ -1,0 +1,16 @@
+html, body {
+    margin:0;
+    padding:0;
+    height: 100%;
+    width: 100%;
+    font-family: Roboto, sans-serif;
+}
+
+* {
+    flex: 0 0 auto;
+}
+
+body > :not(template) {
+    height: 100%;
+    width: 100%;
+}

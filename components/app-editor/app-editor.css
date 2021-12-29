@@ -1,0 +1,39 @@
+:host {
+    display: flex;
+    flex-direction: row;
+    position: relative;
+}
+
+#back {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    height: 50px;
+    width: 50px;
+    display: block;
+    font-size: 2em;
+    background-image: url('../../assets/arrow_back.svg');
+    background-color: #ffffff6b;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 60%;
+    border: none;
+    border-radius: 100%;
+    cursor: pointer;
+}
+
+#back:focus {
+    background-color: #f0f0f0;
+    outline: none;
+}
+
+#back:hover {background-color: #f7f7f7}
+#back:active {background-color: #e8e8e8}
+
+#menu {
+    background-color: rgb(153, 153, 153);
+}
+
+#colors li {
+    background-color: var(--color);
+}

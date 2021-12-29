@@ -1,0 +1,87 @@
+:host {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    margin: 10px;
+    overflow: hidden;
+    border-radius: 4px;
+    box-shadow: 0px 0 4px 0px rgb(60 60 60 / 55%);
+}
+
+#image {
+    height: 200px;
+    padding: 16px;
+    object-fit: contain;
+    background-color: #e0e0e0;
+    image-rendering: pixelated;
+}
+
+#name {
+    padding: 16px 16px 0;
+    font-family: Roboto, sans-serif;
+    font-size: 1.25rem;
+    line-height: 2rem;
+    font-weight: 500;
+    letter-spacing: .0125em;
+}
+
+#infos {
+    padding: 0 16px;
+    font-size: .875rem;
+    line-height: 1.25rem;
+    font-weight: 400;
+    letter-spacing: .0178571429em;
+    color: #848484;
+}
+
+#actions {
+    padding: 8px;
+}
+
+button {
+    padding: 8px;
+    text-transform: uppercase;
+    border-radius: 4px;
+    border: none;
+    font-size: .875rem;
+    font-weight: 500;
+    letter-spacing: .0892857143em;
+    background: none;
+    color: #6200ee;
+    cursor: pointer;
+    margin-right: 16px;
+    min-width: 64px;
+}
+
+button:hover {
+    background-color: #f9f5fe;
+}
+
+button:focus {
+    background-color: #eee3fc;
+    outline: none;
+}
+
+button:active {
+    background-color: #e1ccfa;
+}
+
+@media (max-height: 500px) {
+    #image {
+        height: 130px;
+        padding: 8px;
+    }
+
+    #name {
+        padding: 8px 8px 0;
+    }
+
+    #infos {
+        padding: 0 8px;
+    }
+
+    button {
+        font-size: .75rem;
+        margin-right: 0px;
+    }
+}

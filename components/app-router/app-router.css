@@ -1,0 +1,51 @@
+:host {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    overflow-x: hidden;
+    --transition-duration: 0.8s;
+}
+
+slot {
+    height: 100%;
+    width: 100%;
+}
+
+::slotted(*) {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    pointer-events: none;
+    z-index: 0;
+    visibility: hidden;
+}
+
+::slotted([data-routing-match]) {
+    pointer-events: all;
+}
+
+::slotted([slot="back"]) {
+    transform: scale(0.97);
+    opacity: 0;
+    transition: transform var(--transition-duration), opacity var(--transition-duration), visibility var(--transition-duration);
+}
+
+::slotted([slot="back"][data-routing-match="exact"]) {
+    transform: scale(1);
+    opacity: 1;
+    visibility: visible;
+}
+
+::slotted([slot="front"][data-routing-match]) {
+    transform: translate(-105%);
+    z-index: 100;
+    visibility: visible;
+}
+
+::slotted([slot="front"]) {
+    left: 105%;
+    transform: none;
+    transition: transform var(--transition-duration), visibility var(--transition-duration);
+    background-color: white;
+    box-shadow: 2px 0px 20px 0px #cccccc;
+}
