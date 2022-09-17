@@ -17,6 +17,7 @@ export default class AppViewer extends RoutedBaseComponent {
 
         this.fileInput = this.shadowRoot.getElementById('file');
         this.imgSource = this.shadowRoot.getElementById('source');
+        this.imgPreview = this.shadowRoot.getElementById('preview');
 
         this.fileInput.addEventListener('change', this.onFileChange.bind(this));
 
@@ -24,6 +25,9 @@ export default class AppViewer extends RoutedBaseComponent {
         
         const detectAuto = this.shadowRoot.getElementById('detectAuto');
         detectAuto.addEventListener('click', this.autoDetectColors.bind(this));
+
+        const preview = this.shadowRoot.getElementById('previewBtn');
+        preview.addEventListener('click', this.previewResult.bind(this));
     }
 
     onBackClick() {
@@ -60,6 +64,8 @@ export default class AppViewer extends RoutedBaseComponent {
 
     async autoDetectColors() {
         const {skres, qual} = Utils.detectPalette(this.image);
+        this.skres = skres;
+        this.qual = qual;
 
         this.colorsDom.innerHTML = "";
         for (const rgb of skres.centroids) {
@@ -67,6 +73,12 @@ export default class AppViewer extends RoutedBaseComponent {
             this.createColorItem(color);
         }
 
+    }
+
+    previewResult() {
+        const previewImage = Utils.previewImageWithPalette(this.skres, this.image.width, this.image.height);
+        const previewUrl = Utils.convertImageDataToDataUrl(previewImage);
+        this.imgPreview.src = previewUrl;
     }
 }
 

@@ -328,6 +328,27 @@ function dist(p1, p2) {
 }
 
 function getSkmeansQuality(matrix, skres) {
+
+    let maxDelta = 0;
+    let maxDeltaVal = null;
+    let cumulDelta = 0;
+
+    for (const [i, index] of skres.idxs.entries()) {
+        const c = skres.centroids[index]
+        const d = dist(c, matrix[i]);
+        cumulDelta += d;
+        
+        if (d > maxDelta) {
+            maxDelta = d; 
+            maxDeltaVal = matrix[i];
+        };
+    }
+
+    return {
+        maxDelta,
+        maxDeltaVal,
+        cumulDelta
+    }
     return skres.idxs.reduce((max, curr, i) => {
         const d = dist(skres.centroids[curr], matrix[i]);
 
@@ -340,14 +361,39 @@ export function detectPalette(image, maxColors = 20) {
 
     let skres = skmeans(tab, 2, undefined);
     let qual = getSkmeansQuality(tab, skres);
-    console.log(qual.maxDelta);
+    console.log(skres.centroids.length, qual.maxDelta, qual.cumulDelta);
 
-    while (skres.centroids.length < maxColors && qual.maxDelta > 10) {
-        skres.centroids.push(qual.val);
-        skres = skmeans(tab, skres.centroids.length, skres.centroids);
+    let best = {skres, qual};
+    let bestScore = skres.centroids.length * qual.maxDelta;
+
+    while (skres.centroids.length < maxColors && qual.maxDelta > 0) {
+        skres = skmeans(tab, skres.centroids.length, [...skres.centroids, qual.maxDeltaVal]);
         qual = getSkmeansQuality(tab, skres);
-        console.log(qual.maxDelta);
+        console.log(skres.centroids.length, qual.maxDelta, qual.cumulDelta);
+        if (skres.centroids.length * qual.maxDelta < bestScore) {
+            best = {skres, qual};
+            bestScore = skres.centroids.length * qual.maxDelta;
+        }
     }
 
-    return {skres, qual}
+    return best;
+}
+
+export function previewImageWithPalette(skres, width, height) {
+
+    const data = new Uint8ClampedArray(skres.idxs.length * 4);
+    const centroids = skres.centroids.map(c => [Math.round(c[0]), Math.round(c[1]), Math.round(c[2])])
+
+    for (const [i, index] of skres.idxs.entries()) {
+        const destpixel = data.subarray(i * 4, i * 4 + 4);
+        const c = centroids[index];
+        console.log(index, c);
+
+        destpixel[0] = c[0];
+        destpixel[1] = c[1];
+        destpixel[2] = c[2];
+        destpixel[3] = 255;
+    }
+
+    return new ImageData(data, width, height);
 }

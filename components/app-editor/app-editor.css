@@ -37,3 +37,8 @@
 #colors li {
     background-color: var(--color);
 }
+
+main img {
+    height: 500px;
+    image-rendering: pixelated;
+}
