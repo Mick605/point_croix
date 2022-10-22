@@ -18,6 +18,11 @@
     <script defer src="lib/skmeans.min.js"></script>
 
     <link rel="manifest" href="manifest.json" />
+    <script>
+        if (navigator.serviceWorker) {
+            navigator.serviceWorker.register('sw.js')
+        }
+    </script>
 </head>
 
 <body>
