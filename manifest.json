@@ -1,7 +1,7 @@
 {
     "name": "Point de croix",
     "short_name": "Point de croix",
-    "start_url": "./",
+    "start_url": "/point_croix/",
     "display": "standalone",
     "background_color": "#fdfdfd",
     "theme_color": "#6200ee",
