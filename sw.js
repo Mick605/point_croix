@@ -2,14 +2,13 @@
 const CONTENTS = [
     ".",
     "index.css",
-    "index.js",
-    "sw.js"
+    "index.js"
 ];
 
 
 // sw.js
 
-let cache_name = "PWA_Cache"; // The string used to identify our cache
+const cache_name = "PWA_Cache"; // The string used to identify our cache
 
 self.addEventListener("install", event => {
     event.waitUntil(
@@ -22,19 +21,24 @@ self.addEventListener("install", event => {
     );
 });
 
+//Fetch first, and cache in fallback
+async function getFromNetworkOrCache(request) {
+    let response = null;
+    
+    try {
+        response = await fetch(request);
+    } catch {
+        return caches.match(request)
+    }
 
-//Cache first, then network and add to cache
+    const cache = await caches.open(cache_name);
+    cache.put(request, response.clone());
+    return response;
+}
+
+
 self.addEventListener('fetch', function(event) {
-    event.respondWith(
-        caches.open(cache_name).then(function(cache) {
-            return cache.match(event.request).then(function (response) {
-                return response || fetch(event.request).then(function(response) {
-                    cache.put(event.request, response.clone());
-                    return response;
-                });
-            });
-        })
-    );
+    event.respondWith(getFromNetworkOrCache(event.request))
 });
 
 
