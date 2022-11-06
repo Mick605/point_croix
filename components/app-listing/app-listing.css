@@ -60,8 +60,12 @@ main::-webkit-scrollbar-corner {
     width: 70px;
     border-radius: 100%;
     border: none;
-    font-size: 3em;
+    font-size: 0;
     background-color: #6200ee;
+    background-image: url('../../assets/plus.svg');
+    background-position: center;
+    background-size: 55px;
+    background-repeat: no-repeat;
     color: white;
     box-shadow: 0px 0 8px 0px rgb(60 60 60 / 80%);
     cursor: pointer;
