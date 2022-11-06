@@ -237,7 +237,7 @@ export default class AppViewer extends RoutedBaseComponent {
     getSvgPanZoomOptions() {
         return {
             zoomScaleSensitivity: 0.4,
-            minZoom: 0.5,
+            minZoom: 0.1,
             maxZoom: 15,
             // minZoom: false,
             dblClickZoomEnabled: false,
