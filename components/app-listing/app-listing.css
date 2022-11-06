@@ -64,7 +64,7 @@ main::-webkit-scrollbar-corner {
     background-color: #6200ee;
     background-image: url('../../assets/plus.svg');
     background-position: center;
-    background-size: 55px;
+    background-size: 70%;
     background-repeat: no-repeat;
     color: white;
     box-shadow: 0px 0 8px 0px rgb(60 60 60 / 80%);
