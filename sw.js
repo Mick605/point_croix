@@ -38,7 +38,14 @@ async function getFromNetworkOrCache(request) {
 
 
 self.addEventListener('fetch', function(event) {
-    event.respondWith(getFromNetworkOrCache(event.request))
+    let req = event.request;
+
+    // If fetch is a navigation, answer with the "." ressource instead, to simulate serving a PWA
+    if (req.mode === "navigate") {
+        req = new Request(new URL(".", this.serviceWorker.scriptURL));
+    }
+
+    event.respondWith(getFromNetworkOrCache(req))
 });
 
 
