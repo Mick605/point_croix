@@ -92,9 +92,11 @@ export default class AppViewer extends RoutedBaseComponent {
             this.createSvgPath(area.color, area.paths, threadcolor);
         }
 
-        await this.setImageHref(this.shadowRoot.getElementById("srcimage"), dataurl);
-        await this.setImageHref(this.shadowRoot.getElementById("greyimage"), greydataurl);
-        await this.setImageHref(this.shadowRoot.getElementById("threadimage"), threaddataurl);
+        await Promise.all([
+            this.setImageHref(this.shadowRoot.getElementById("srcimage"), dataurl),
+            this.setImageHref(this.shadowRoot.getElementById("greyimage"), greydataurl),
+            this.setImageHref(this.shadowRoot.getElementById("threadimage"), threaddataurl),
+        ]);
 
         this.svgPanZoom.reset();
         this.svgPanZoom.resize();
