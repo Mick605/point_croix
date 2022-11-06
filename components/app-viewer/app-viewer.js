@@ -1,4 +1,4 @@
-import { RoutedBaseComponent, routingHandler, baseUrl } from '../../lib/webcomponent.js';
+import { RoutedBaseComponent, baseUrl } from '../../lib/webcomponent.js';
 import * as Utils from "../../services/imageUtils.js";
 import Storage from "../../services/storage.js";
 
@@ -151,7 +151,7 @@ export default class AppViewer extends RoutedBaseComponent {
     onBackClick() {
         this.activateColor(null);
         this.clearSvgGroups();
-        routingHandler.navigateTo("/");
+        history.back();
     }
 
     getParentByClass(element, classname) {
