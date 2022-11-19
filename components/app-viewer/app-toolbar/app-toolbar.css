@@ -1,0 +1,59 @@
+:host {
+    display: flex;
+    flex-direction: row;
+    gap: 24px;
+    padding: 6px;
+    border-radius: 50px;
+    pointer-events: none;
+}
+
+.toolitem {
+    display: inline-block;
+    height: 64px;
+    width: 64px;
+    border-radius: 50%;
+    font-size: 0;
+    background-color: #d1d1d1;
+    background-image: url('../../../assets/toolbar-palette.png');
+    background-position: center;
+    background-size: 50%;
+    background-repeat: no-repeat;
+    border: none;
+    box-shadow: 0 0 2px 2px #a7a7a7;
+    cursor: pointer;
+    pointer-events: auto;
+}
+
+.toolitem:hover {
+    background-color: #c1c1c1;
+}
+
+.toolitem:active {
+    background-color: #b1b1b1;
+}
+
+.toolitem.open {
+    background-color: #666666;
+}
+
+.toolcontainer {
+    position: relative;
+}
+
+.toolcontainer .submenu {
+    visibility: hidden;
+    display: flex;
+    gap: 16px;
+    flex-direction: column-reverse;
+    position: absolute;
+    bottom: 100%;
+    background-color: #000000a6;
+    padding: 10px;
+    margin: 10px -10px;
+    border-radius: 50px;
+    pointer-events: auto;
+}
+
+.toolcontainer:has(.open) .submenu {
+    visibility: visible;
+}

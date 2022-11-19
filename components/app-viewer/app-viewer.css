@@ -118,3 +118,10 @@ path {
 :host(.colorselected) #reset {
     visibility: visible;
 }
+
+#toolbar {
+    position: fixed;
+    bottom: 10px;
+    left: auto;
+    right: auto;
+}

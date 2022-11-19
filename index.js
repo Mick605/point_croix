@@ -4,6 +4,7 @@ import AppRouter from './components/app-router/app-router.js';
 import AppViewer from './components/app-viewer/app-viewer.js';
 import AppPalette from './components/app-viewer/app-palette/app-palette.js';
 import AppPaletteItem from './components/app-viewer/app-palette/app-palette-item/app-palette-item.js';
+import AppToolbar from './components/app-viewer/app-toolbar/app-toolbar.js'
 import AppListing from './components/app-listing/app-listing.js';
 import AppPictureCard from './components/app-listing/app-picture-card/app-picture-card.js';
 import AppPopup from './components/_shared/app-popup/app-popup.js';
@@ -21,6 +22,7 @@ WebComponent({
         AppFormAdd,
         AppPalette,
         AppPaletteItem,
+        AppToolbar,
         AppEditor
     ]
 });
