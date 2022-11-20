@@ -14,15 +14,29 @@
     border-radius: 50%;
     font-size: 0;
     background-color: #d1d1d1;
-    background-image: url('../../../assets/toolbar-palette.png');
+    background-image: url('../../../assets/toolbar-thread-mode.png');
     background-position: center;
-    background-size: 50%;
+    background-size: 60%;
     background-repeat: no-repeat;
     border: none;
     box-shadow: 0 0 2px 2px #a7a7a7;
     cursor: pointer;
     pointer-events: auto;
 }
+
+.toolitem[data-icon="background-light"] {
+    background-image: url('../../../assets/toolbar-background-light.png');
+}
+
+.toolitem[data-icon="background-dark"] {
+    background-image: url('../../../assets/toolbar-background-dark.png');
+}
+
+.toolitem[data-icon="thread-mode"] {
+    background-image: url('../../../assets/toolbar-thread-mode.png');
+}
+
+
 
 .toolitem:hover {
     background-color: #c1c1c1;
