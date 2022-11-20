@@ -24,11 +24,11 @@
     pointer-events: auto;
 }
 
-.toolitem[data-icon="background-light"] {
+.toolitem[data-action="background"][data-value="light"] {
     background-image: url('../../../assets/toolbar-background-light.png');
 }
 
-.toolitem[data-icon="background-dark"] {
+.toolitem[data-action="background"][data-value="dark"] {
     background-image: url('../../../assets/toolbar-background-dark.png');
 }
 

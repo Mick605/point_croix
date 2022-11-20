@@ -4,6 +4,14 @@
     position: relative;
 }
 
+:host([data-background="light"]) {
+    background-color: #ffffff;
+}
+
+:host([data-background="dark"]) {
+    background-color: #161616;
+}
+
 #svgmain {
     flex: 1 0 0px;
     image-rendering: pixelated;

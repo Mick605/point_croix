@@ -32,6 +32,9 @@ export default class AppViewer extends RoutedBaseComponent {
         this.paletteArea = this.shadowRoot.getElementById('palettearea');
         this.paletteArea.addEventListener('activatecolor', (e) => this.activateColor(e.detail))
         this.paletteArea.addEventListener('changecolormode', (e) => this.changeColorMode(e.detail))
+
+        this.toolbar = this.shadowRoot.getElementById('toolbar');
+        this.toolbar.addEventListener('changeToolbarMode', (e) => this.toolbarChangeMode(e.detail))
     }
 
     async activate(url, params) {
@@ -152,6 +155,17 @@ export default class AppViewer extends RoutedBaseComponent {
         this.activateColor(null);
         this.clearSvgGroups();
         history.back();
+    }
+
+    toolbarChangeMode({action, value}) {
+        switch (action) {
+            case "background":
+                this.dataset.background = value;
+                break;        
+            default:
+                console.error("unknown toolbar event", e);
+                break;
+        }
     }
 
     getParentByClass(element, classname) {
