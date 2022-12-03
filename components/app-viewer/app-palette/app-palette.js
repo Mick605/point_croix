@@ -20,6 +20,21 @@ export default class AppPalette extends BaseComponent {
         this.domColorMode.addEventListener('change', () => this.changeColorMode(this.domColorMode.checked ? "original" : "thread"));
     }
 
+    set activeColor(value) {
+        if (value === this._activeColor) return;
+
+        const activepi = this.paletteMap.get(this._activeColor);
+        if (activepi) activepi.setActive(false);
+
+        this._activeColor = value;
+        const newactivepi = this.paletteMap.get(this._activeColor);
+        if (newactivepi) newactivepi.setActive(true);
+    }
+
+    get activeColor() {
+        return this._activeColor;
+    }
+
     reset() {
         this._activeColor = null;
 
@@ -61,21 +76,6 @@ export default class AppPalette extends BaseComponent {
         }
 
         this.dispatchEvent(new CustomEvent("changecolormode", { bubbles: true, detail: mode }));
-    }
-
-    set activeColor(value) {
-        if (value === this._activeColor) return;
-
-        const activepi = this.paletteMap.get(this._activeColor);
-        if (activepi) activepi.setActive(false);
-
-        this._activeColor = value;
-        const newactivepi = this.paletteMap.get(this._activeColor);
-        if (newactivepi) newactivepi.setActive(true);
-    }
-
-    get activeColor() {
-        return this._activeColor;
     }
 }
 

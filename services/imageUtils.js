@@ -180,7 +180,7 @@ export class ThreadFinder {
         const result = [];
         for (const entry of this.threads) {
             const deltaE = getCie94Diff(lab, entry.lab);
-            result.push(Object.assign({ deltaE }, entry));
+            result.push({ ...entry, deltaE });
         }
         result.sort((a, b) => a.deltaE - b.deltaE);
         

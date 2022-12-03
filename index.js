@@ -2,6 +2,7 @@ import { WebComponent } from './lib/webcomponent.js';
 
 import AppRouter from './components/app-router/app-router.js';
 import AppViewer from './components/app-viewer/app-viewer.js';
+import AppDisplayArea from './components/app-viewer/app-display-area/app-display-area.js';
 import AppPalette from './components/app-viewer/app-palette/app-palette.js';
 import AppPaletteItem from './components/app-viewer/app-palette/app-palette-item/app-palette-item.js';
 import AppToolbar from './components/app-viewer/app-toolbar/app-toolbar.js'
@@ -16,6 +17,7 @@ WebComponent({
     components: [
         AppRouter,
         AppViewer,
+        AppDisplayArea,
         AppListing,
         AppPictureCard,
         AppPopup,

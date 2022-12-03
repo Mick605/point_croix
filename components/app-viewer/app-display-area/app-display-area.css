@@ -1,0 +1,72 @@
+#svgmain {
+    height: 100%;
+    width: 100%;
+    image-rendering: pixelated;
+    transition: opacity 0.2s;
+}
+
+#svgmain.loading {
+    visibility: hidden;
+    opacity: 0;
+}
+
+#svgmain path {
+    fill-rule: evenodd;
+    fill-opacity: 0;
+}
+
+#svgmain #svggrid, #svgmain text {
+    pointer-events: none;
+}
+
+#svgmain .colorgroup.active path {
+    fill: var(--threadcolor);
+    fill-opacity: 1;
+    stroke: black;
+    stroke-dasharray: 3 1;
+}
+
+:host(.originalcolor) #svgmain .colorgroup.active path {
+    fill: var(--origcolor);
+}
+
+#svgmain text {
+    text-anchor: middle;
+    alignment-baseline: central;
+}
+
+#svgmain .colorgroup.active text {
+    font-size: 10px;
+    stroke: white;
+    fill: black;
+    stroke-width: 0.2px;
+    font-weight: bolder;
+}
+
+#threadimage {
+    image-rendering: pixelated;
+    visibility: visible;
+}
+
+#srcimage {
+    image-rendering: pixelated;
+    visibility: hidden;
+}
+
+#greyimage {
+    image-rendering: pixelated;
+    visibility: hidden;
+}
+
+:host(.colorselected) #threadimage,
+:host(.originalcolor) #threadimage {
+    visibility: hidden;
+}
+
+:host(.originalcolor) #srcimage {
+    visibility: visible;
+}
+
+:host(.colorselected) #greyimage {
+    visibility: visible;
+}
