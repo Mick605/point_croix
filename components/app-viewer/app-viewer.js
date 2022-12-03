@@ -1,5 +1,7 @@
-import { RoutedBaseComponent, baseUrl } from '../../lib/webcomponent.js';
+import { RoutedBaseComponent } from '../../lib/webcomponent.js';
 import Storage from "../../services/storageService.js";
+import ThreadPaletteManager from '../../services/threadService.js';
+import * as Utils from "../../services/imageService.js";
 
 export default class AppViewer extends RoutedBaseComponent {
 
@@ -11,10 +13,11 @@ export default class AppViewer extends RoutedBaseComponent {
         super();
 
         this.activeColor = null;
+        this.activeThreadPalette = null;
 
         const reset = this.shadowRoot.getElementById('reset');
         reset.addEventListener('click', this.onResetClick.bind(this));
-        
+
         const back = this.shadowRoot.getElementById('back');
         back.addEventListener('click', this.onBackClick.bind(this));
 
@@ -33,7 +36,29 @@ export default class AppViewer extends RoutedBaseComponent {
         const id = parseInt(params.id);
         if (!id) return;
 
-        this.displayArea.imgObject = await Storage.getOneImage(id);
+        await this.initializeImageFromId(id);
+    }
+
+    async initializeImageFromId(id) {
+        if (this.activeThreadPalette === null) {
+            await ThreadPaletteManager.loadPalettes();
+            this.activeThreadPalette = ThreadPaletteManager.get("DMC");
+        }
+
+        const { image } = await Storage.getOneImage(id);
+        const splitter = new Utils.ImageAreaSplitter(image);
+
+        const colorEquiv = new Map();
+        this.paletteArea.reset();
+        for (const [color, count] of splitter.palette) {
+            if (color === null) continue;
+
+            const closest = this.activeThreadPalette.findClosestFromColor(color);
+            this.paletteArea.createPaletteItem(color, count, closest.thread);
+            colorEquiv.set(color, closest.thread.rgb);
+        }
+
+        await this.displayArea.setImage(image, splitter, colorEquiv);
     }
 
     activateColor(newColor) {
@@ -63,11 +88,11 @@ export default class AppViewer extends RoutedBaseComponent {
         history.back();
     }
 
-    toolbarChangeMode({action, value}) {
+    toolbarChangeMode({ action, value }) {
         switch (action) {
             case "background":
                 this.dataset.background = value;
-                break;        
+                break;
             default:
                 console.error("unknown toolbar event", e);
                 break;

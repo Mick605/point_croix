@@ -56,7 +56,7 @@ export default class AppPalette extends BaseComponent {
         if (thread) {
             pi.threadRef = "DMC " + thread.ref;
             pi.threadName = thread.name;
-            pi.threadColor = thread.color;
+            pi.threadColor = thread.hexa;
         }
         pi.addEventListener('click', () => this.onPaletteItemClick(pi));
         this.paletteMap.set(hexacolor, pi);

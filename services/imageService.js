@@ -1,5 +1,3 @@
-import { hexToRgb, rgb2lab, getCie94Diff} from "../lib/colorUtils.js";
-
 export const DIR_UP = 1;
 export const DIR_LEFT = 2;
 export const DIR_DOWN = -1;
@@ -160,31 +158,6 @@ export class ImageAreaSplitter {
             boundaries,
             paths
         };
-    }
-}
-
-export class ThreadFinder {
-
-    constructor(threads) {
-        this.threads = threads;
-
-        for (const entry of this.threads) {
-            entry.rgb = hexToRgb(entry.color);
-            entry.lab = rgb2lab(entry.rgb);
-        }
-    }
-
-    findClosestColors(hexa) {
-        const lab = rgb2lab(hexToRgb(hexa))
-        
-        const result = [];
-        for (const entry of this.threads) {
-            const deltaE = getCie94Diff(lab, entry.lab);
-            result.push({ ...entry, deltaE });
-        }
-        result.sort((a, b) => a.deltaE - b.deltaE);
-        
-        return result;
     }
 }
 

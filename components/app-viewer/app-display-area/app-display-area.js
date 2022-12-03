@@ -1,4 +1,4 @@
-import { BaseComponent, baseUrl } from '../../../lib/webcomponent.js';
+import { BaseComponent } from '../../../lib/webcomponent.js';
 import * as Utils from "../../../services/imageService.js";
 
 const SVG_GRID_SCALE = 10;
@@ -44,17 +44,6 @@ export default class AppDisplayArea extends BaseComponent {
         return this._activeColor;
     }
 
-    set imgObject(value) {
-        if (value === this._imgObject) return;
-        this._imgObject = value;
-
-        this.initializeImage();
-    }
-
-    get imgObject() {
-        return this._imgObject;
-    }
-
     setImageHref(image, value) {
         return new Promise((resolve, reject) => {
             image.addEventListener('load', resolve, { once: true });
@@ -64,10 +53,8 @@ export default class AppDisplayArea extends BaseComponent {
         })
     }
 
-    async initializeImage() {
+    async setImage(imgData, splitter, colorEquiv) {
         this.svg.classList.add('loading');
-
-        const imgData = this._imgObject.image;
 
         const dataurl = Utils.convertImageDataToDataUrl(imgData);
         const greyimg = Utils.createGreyScaleImage(imgData);
@@ -79,22 +66,6 @@ export default class AppDisplayArea extends BaseComponent {
         const svggrid = this.shadowRoot.getElementById('svggrid');
         svggrid.setAttribute('width', w + 'px');
         svggrid.setAttribute('height', h + 'px');        
-
-        const resp = await fetch(baseUrl + 'datas/dmc_threads.json');
-        const jsonData = await resp.json();
-        this.threadFinder = new Utils.ThreadFinder(jsonData);
-
-        const splitter = new Utils.ImageAreaSplitter(imgData);
-
-        const colorEquiv = new Map();
-        // this.paletteArea.reset();
-        for (const [color, count] of splitter.palette) {
-            if (color === null) continue;
-
-            const thread = this.threadFinder.findClosestColors(Utils.colorToHexa(color))[0];
-            // this.paletteArea.createPaletteItem(color, count, thread);
-            colorEquiv.set(color, thread.rgb);
-        }
 
         const threadimg = Utils.replaceColorsInImage(imgData, colorEquiv);
         const threaddataurl = Utils.convertImageDataToDataUrl(threadimg);
