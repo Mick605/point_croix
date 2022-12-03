@@ -1,5 +1,5 @@
 import { RoutedBaseComponent, baseUrl } from '../../lib/webcomponent.js';
-import Storage from "../../services/storage.js";
+import Storage from "../../services/storageService.js";
 
 export default class AppViewer extends RoutedBaseComponent {
 

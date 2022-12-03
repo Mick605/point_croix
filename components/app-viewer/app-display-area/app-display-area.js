@@ -1,5 +1,5 @@
 import { BaseComponent, baseUrl } from '../../../lib/webcomponent.js';
-import * as Utils from "../../../services/imageUtils.js";
+import * as Utils from "../../../services/imageService.js";
 
 const SVG_GRID_SCALE = 10;
 

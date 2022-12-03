@@ -1,5 +1,5 @@
 import { RoutedBaseComponent, routingHandler } from '../../lib/webcomponent.js';
-import Storage from "../../services/storage.js";
+import Storage from "../../services/storageService.js";
 
 export default class AppListing extends RoutedBaseComponent {
 

@@ -1,5 +1,5 @@
 import { BaseComponent } from '../../../lib/webcomponent.js';
-import * as Utils from "../../../services/imageUtils.js";
+import * as Utils from "../../../services/imageService.js";
 
 export default class AppPictureCard extends BaseComponent {
 

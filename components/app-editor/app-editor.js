@@ -1,6 +1,6 @@
 import { RoutedBaseComponent, routingHandler, baseUrl } from '../../lib/webcomponent.js';
-import * as Utils from "../../services/imageUtils.js";
-import Storage from "../../services/storage.js";
+import * as Utils from "../../services/imageService.js";
+import Storage from "../../services/storageService.js";
 
 export default class AppViewer extends RoutedBaseComponent {
 
