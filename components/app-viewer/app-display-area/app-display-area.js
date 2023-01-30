@@ -3,6 +3,7 @@ import { BaseComponent } from '../../../lib/webcomponent.js';
 import * as Utils from "../../../services/imageService.js";
 
 const SVG_GRID_SCALE = 10;
+const SVG_MIN_DISPLAYED_SIZE = 4;
 
 export default class AppDisplayArea extends BaseComponent {
 
@@ -25,7 +26,6 @@ export default class AppDisplayArea extends BaseComponent {
         this.svgMatrixHandler = new SvgMatrixHandler(svgmain, this.shadowRoot.getElementById('svgmatrixhandler'))
         svgmain.addEventListener('wheel', (e) => this.onMouseWheel(e));
 
-        // this.svgPanZoom = svgPanZoom(this.shadowRoot.getElementById('svgmain'), this.getSvgPanZoomOptions());
         this.hammer = new Hammer(svgmain, {
             // inputClass: Hammer.SUPPORT_POINTER_EVENTS ? Hammer.PointerEventInput : Hammer.TouchInput
         })
@@ -125,11 +125,6 @@ export default class AppDisplayArea extends BaseComponent {
             this.setImageHref(this.shadowRoot.getElementById("threadimage"), threaddataurl),
         ]);
 
-        // this.svgPanZoom.reset();
-        // this.svgPanZoom.resize();
-        // this.svgPanZoom.updateBBox(); // Update viewport bounding box
-        // this.svgPanZoom.fit();
-        // this.svgPanZoom.center();
         this.svgMatrixHandler.init();
         
         this.svg.classList.remove('loading');
@@ -199,7 +194,7 @@ export default class AppDisplayArea extends BaseComponent {
                     offset[0] = -value / 2;
                 }
 
-                if (value >= 5) {
+                if (value >= SVG_MIN_DISPLAYED_SIZE) {
                     const svglabel = document.createElementNS("http://www.w3.org/2000/svg", "text");
                     svglabel.setAttribute('x', (pos[0] + offset[0]) * SVG_GRID_SCALE);
                     svglabel.setAttribute('y', (pos[1] + offset[1]) * SVG_GRID_SCALE);
@@ -212,77 +207,6 @@ export default class AppDisplayArea extends BaseComponent {
         svgpath.setAttribute('d', txt);
         svgpath.style.setProperty('--origcolor', hexacolor);        
         svgpath.style.setProperty('--threadcolor', Utils.colorToHexa(threadcolor));
-    }
-
-    getSvgPanZoomOptions() {
-        return {
-            zoomScaleSensitivity: 0.4,
-            minZoom: 0.1,
-            maxZoom: 15,
-            // minZoom: false,
-            dblClickZoomEnabled: false,
-            fit: false,
-            center: false,
-            // beforePan: (oldPan, newPan) => {
-            //     const delta = Math.abs(oldPan.x - newPan.x) + Math.abs(oldPan.y - newPan.y);
-
-            //     if (delta > 30 || panInProgress) {
-            //         panInProgress = true;
-            //     } else {
-            //         return false;
-            //     }
-            // },
-            customEventsHandler: {
-                haltEventListeners: ['touchstart', 'touchend', 'touchmove', 'touchleave', 'touchcancel'],
-                init: function (options) {
-                    const instance = options.instance;
-                    let initialScale = 1;
-                    let pannedX = 0;
-                    let pannedY = 0;
-    
-                    // Init Hammer
-                    // Listen only for pointer and touch events
-                    this.hammer = Hammer(options.svgElement, {
-                        inputClass: Hammer.SUPPORT_POINTER_EVENTS ? Hammer.PointerEventInput : Hammer.TouchInput
-                    })
-    
-                    // Enable pinch
-                    this.hammer.get('pinch').set({ enable: true })
-    
-                    // Handle pan
-                    this.hammer.on('panstart panmove', function (ev) {
-                        // On pan start reset panned variables
-                        if (ev.type === 'panstart') {
-                            pannedX = 0
-                            pannedY = 0
-                        }
-    
-                        // Pan only the difference
-                        instance.panBy({ x: ev.deltaX - pannedX, y: ev.deltaY - pannedY })
-                        pannedX = ev.deltaX
-                        pannedY = ev.deltaY
-                    })
-    
-                    // Handle pinch
-                    this.hammer.on('pinchstart pinchmove', function (ev) {
-                        // On pinch start remember initial zoom
-                        if (ev.type === 'pinchstart') {
-                            initialScale = instance.getZoom()
-                            instance.zoomAtPoint(initialScale * ev.scale, { x: ev.center.x, y: ev.center.y })
-                        }
-    
-                        instance.zoomAtPoint(initialScale * ev.scale, { x: ev.center.x, y: ev.center.y })
-                    })
-    
-                    // Prevent moving the page on some devices when panning over SVG
-                    options.svgElement.addEventListener('touchmove', function (e) { e.preventDefault(); });
-                },
-    
-                destroy: function () {
-                    this.hammer.destroy()
-                }
-            }
-        };
     }
 }
 
