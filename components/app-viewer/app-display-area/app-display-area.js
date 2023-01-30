@@ -17,7 +17,6 @@ export default class AppDisplayArea extends BaseComponent {
         this._activeColor = null;
 
         this.svg = this.shadowRoot.getElementById('svgmain');
-        // this.svg.addEventListener('click', this.onSvgClick.bind(this));
         
         const svgimagegroup = this.shadowRoot.getElementById("svgimagegroup");
         svgimagegroup.setAttribute("transform", `scale(${SVG_GRID_SCALE})`)
