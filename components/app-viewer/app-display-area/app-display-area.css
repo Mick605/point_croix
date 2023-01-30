@@ -1,6 +1,10 @@
+:host {
+    display: flex;
+}
+
 #svgmain {
-    height: 100%;
-    width: 100%;
+    flex: 1 0 0px;
+    align-self: stretch;
     image-rendering: pixelated;
     transition: opacity 0.2s;
 }

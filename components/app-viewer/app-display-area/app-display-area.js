@@ -1,3 +1,4 @@
+import { SvgMatrixHandler } from '../../../lib/svg-matrix.js';
 import { BaseComponent } from '../../../lib/webcomponent.js';
 import * as Utils from "../../../services/imageService.js";
 
@@ -15,12 +16,54 @@ export default class AppDisplayArea extends BaseComponent {
         this._activeColor = null;
 
         this.svg = this.shadowRoot.getElementById('svgmain');
-        this.svg.addEventListener('click', this.onSvgClick.bind(this));
+        // this.svg.addEventListener('click', this.onSvgClick.bind(this));
         
         const svgimagegroup = this.shadowRoot.getElementById("svgimagegroup");
         svgimagegroup.setAttribute("transform", `scale(${SVG_GRID_SCALE})`)
         
-        this.svgPanZoom = svgPanZoom(this.shadowRoot.getElementById('svgmain'), this.getSvgPanZoomOptions());
+        const svgmain = this.shadowRoot.getElementById('svgmain')
+        this.svgMatrixHandler = new SvgMatrixHandler(svgmain, this.shadowRoot.getElementById('svgmatrixhandler'))
+        svgmain.addEventListener('wheel', (e) => this.onMouseWheel(e));
+
+        // this.svgPanZoom = svgPanZoom(this.shadowRoot.getElementById('svgmain'), this.getSvgPanZoomOptions());
+        this.hammer = new Hammer(svgmain, {
+            // inputClass: Hammer.SUPPORT_POINTER_EVENTS ? Hammer.PointerEventInput : Hammer.TouchInput
+        })
+        
+        this.hammer.get('pan').set({ direction: Hammer.DIRECTION_ALL });
+
+        this.hammerVars = {
+            pannedX: 0, 
+            pannedY: 0
+        }
+        // Handle pan
+        this.hammer.on('panstart panmove', (ev) => {
+            // On pan start reset panned variables
+            if (ev.type === 'panstart') {
+                this.hammerVars.pannedX = 0
+                this.hammerVars.pannedY = 0
+            }
+
+            // Pan only the difference
+            this.svgMatrixHandler.panBy({ x: ev.deltaX - this.hammerVars.pannedX, y: ev.deltaY - this.hammerVars.pannedY })
+            this.hammerVars.pannedX = ev.deltaX
+            this.hammerVars.pannedY = ev.deltaY
+        })
+
+        this.hammer.on('tap', (ev) => {
+            const path = ev.srcEvent.composedPath();
+            this.onSvgClick(path[0]);
+        })
+
+        this.hammer.on('pinch', (ev) => {
+            console.log(ev);
+            this.svgMatrixHandler.zoomBy({scale: ev.scale, x: ev.center.x, y: ev.center.y})
+        })
+    }
+
+    onMouseWheel(e) {
+        const scale = e.wheelDelta > 0 ? e.wheelDelta / 100 : 100 / -e.wheelDelta;
+        this.svgMatrixHandler.zoomBy({scale: scale, x: e.x, y: e.y})
     }
 
     set activeColor(value) {
@@ -82,17 +125,18 @@ export default class AppDisplayArea extends BaseComponent {
             this.setImageHref(this.shadowRoot.getElementById("threadimage"), threaddataurl),
         ]);
 
-        this.svgPanZoom.reset();
-        this.svgPanZoom.resize();
-        this.svgPanZoom.updateBBox(); // Update viewport bounding box
-        this.svgPanZoom.fit();
-        this.svgPanZoom.center();
+        // this.svgPanZoom.reset();
+        // this.svgPanZoom.resize();
+        // this.svgPanZoom.updateBBox(); // Update viewport bounding box
+        // this.svgPanZoom.fit();
+        // this.svgPanZoom.center();
+        this.svgMatrixHandler.init();
         
         this.svg.classList.remove('loading');
     }
 
-    onSvgClick(e) {
-        const group = e.target.closest('.colorgroup');
+    onSvgClick(target) {
+        const group = target.closest('.colorgroup');
 
         if (!group) return;
         this.dispatchEvent(new CustomEvent("activatecolor", { bubbles: true, detail: group.dataset['color'] }));
